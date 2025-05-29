@@ -60,9 +60,12 @@ jobs:
             GITHUB_ACTOR: ${{ github.actor }}
             GITHUB_REPOSITORY: ${{ github.repository }}
 
-        - name: Ver artefatos publicados
-          run: ls -R ~/.m2/repository/com/example
-
+        - name: Verificar pacotes publicados no GitHub Packages
+          run: |
+            echo "Listando pacotes publicados:"
+            curl -s -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+            -H "Accept: application/vnd.github+json" \
+            "https://api.github.com/orgs/${{ github.repository_owner }}/packages?package_type=maven" | jq .
           
 
         # - name: Publish to GitHub Packages
