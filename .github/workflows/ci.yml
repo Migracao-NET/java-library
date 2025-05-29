@@ -60,6 +60,8 @@ jobs:
             GITHUB_ACTOR: ${{ github.actor }}
             GITHUB_REPOSITORY: ${{ github.repository }}
 
+        - name: Ver artefatos publicados
+          run: ls -R ~/.m2/repository/com/example
 
           
 
