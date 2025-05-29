@@ -27,25 +27,8 @@ jobs:
         - name: Build with Gradle
           run: ./gradlew build
 
-        - name: Configure credentials
-          run: |
-            mkdir -p ~/.gradle
-            echo "publishing {
-              repositories {
-                maven {
-                  name = 'GitHubPackages'
-                  url = uri(\"https://maven.pkg.github.com/${{ github.repository }}\")
-                  credentials {
-                    username = '${{ github.actor }}'
-                    password = '${{ secrets.GITHUB_TOKEN }}'
-                  }
-                }
-              }
-            }" >> ~/.gradle/init.gradle
-
         - name: Publish to GitHub Packages
           run: ./gradlew publish
           env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-            GITHUB_REPOSITORY: ${{ github.repository }}
-            GITHUB_ACTOR: ${{ github.actor }}
+            ORG_GRADLE_PROJECT_githubUsername: ${{ github.actor }}
+            ORG_GRADLE_PROJECT_githubToken: ${{ secrets.GITHUB_TOKEN }}
