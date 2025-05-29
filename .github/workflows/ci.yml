@@ -27,8 +27,42 @@ jobs:
         - name: Build with Gradle
           run: ./gradlew build
 
-        - name: Publish to GitHub Packages
+        - name: Run tests
+          run: ./gradlew test
+
+        - name: Criar config Gradle para GitHub Packages
+          run: |
+            mkdir -p ~/.gradle
+            echo "publishing {
+              repositories {
+                maven {
+                  name = 'GitHubPackages'
+                  url = uri('https://maven.pkg.github.com/${{ github.repository }}')
+                  credentials {
+                    username = '${{ github.actor }}'
+                    password = '${{ secrets.GITHUB_TOKEN }}'
+                  }
+                }
+              }
+            }" >> ~/.gradle/init.gradle
+
+        - name: Publicar no GitHub Packages
           run: ./gradlew publish
-          env:
-            ORG_GRADLE_PROJECT_githubUsername: ${{ github.actor }}
-            ORG_GRADLE_PROJECT_githubToken: ${{ secrets.GITHUB_TOKEN }}
+          
+
+        # - name: Publish to GitHub Packages
+        #   run: ./gradlew publish
+        #   env:
+        #     ORG_GRADLE_PROJECT_githubUsername: ${{ github.actor }}
+        #     ORG_GRADLE_PROJECT_githubToken: ${{ secrets.GITHUB_TOKEN }}
+
+        # - name: Debug GitHub Packages Publication
+        #   run: |
+        #     echo "Checking Gradle configuration:"
+        #     cat ~/.gradle/gradle.properties || echo "No gradle.properties found"
+        #     echo "Listing build/libs directory:"
+        #     ls -l build/libs || echo "No build/libs directory found"
+        #     echo "Checking environment variables:"
+        #     env | grep 'GITHUB\|GRADLE'
+        #     echo "Gradle publish dry run:"
+        #     ./gradlew publish --dry-run
