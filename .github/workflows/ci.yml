@@ -33,21 +33,34 @@ jobs:
         - name: Criar config Gradle para GitHub Packages
           run: |
             mkdir -p ~/.gradle
-            echo "publishing {
-              repositories {
-                maven {
-                  name = 'GitHubPackages'
-                  url = uri('https://maven.pkg.github.com/${{ github.repository }}')
-                  credentials {
-                    username = '${{ github.actor }}'
-                    password = '${{ secrets.GITHUB_TOKEN }}'
+            echo "allprojects {
+              afterEvaluate {
+                if (project.plugins.hasPlugin('maven-publish')) {
+                  project.extensions.configure(org.gradle.api.publish.PublishingExtension) {
+                    repositories {
+                      maven {
+                        name = 'GitHubPackages'
+                        url = uri(\"https://maven.pkg.github.com/${{ github.repository }}\")
+                        credentials {
+                          username = System.getenv('GITHUB_ACTOR')
+                          password = System.getenv('GITHUB_TOKEN')
+                        }
+                      }
+                    }
                   }
                 }
               }
-            }" >> ~/.gradle/init.gradle
+            }" > ~/.gradle/init.gradle
+
 
         - name: Publicar no GitHub Packages
           run: ./gradlew publish
+          env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            GITHUB_ACTOR: ${{ github.actor }}
+            GITHUB_REPOSITORY: ${{ github.repository }}
+
+
           
 
         # - name: Publish to GitHub Packages
