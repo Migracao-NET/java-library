@@ -27,8 +27,37 @@ jobs:
           - name: Build with Gradle
             run: ./gradlew build
 
+          - name: SonarCloud Scan
+            uses: SonarSource/sonarcloud-github-action@v2
+            with:
+              projectBaseDir: .
+            env:
+              SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+              SONAR_PROJECT_KEY: ${{ github.event.repository.name }}
+              SONAR_ORGANIZATION: ${{ 'migracao-net' }}
+
           - name: Upload build artifacts
             uses: actions/upload-artifact@v4
             with:
               name: Package
               path: build/libs
+
+    # deploy:
+    #     runs-on: ubuntu-latest
+    #     needs: build
+          # permissions:
+          #   contents: read
+          #   packages: write
+    #     steps:
+    #       - uses: actions/checkout@v4
+    #       - uses: actions/download-artifact@v4
+    #         with:
+    #           name: Package
+
+    #       - name: Deploy to Server
+    #         run: |
+    #           echo "Deploying to server..."
+    #           # Aqui você pode adicionar os comandos para fazer o deploy do seu aplicativo
+    #           # Por exemplo, copiar os arquivos para um servidor remoto via SCP ou SFTP
+    #           # ou usar uma ferramenta de deploy como Ansible, Capistrano, etc.
+    #           echo "Deploy completed successfully!"

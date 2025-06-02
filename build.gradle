@@ -34,14 +34,14 @@ publishing {
 			from components.java
 		}
 	}
-	repositories {
-		maven {
-			name = "GitHubPackages"
-			url = uri("https://maven.pkg.github.com/Migracao-NET/java-library")
-			credentials {
-				username = project.findProperty("githubUsername") ?: ""
-				password = project.findProperty("githubToken") ?: ""
-			}
-		}
-	}
+  	repositories {
+    	maven {
+      name = "GitHubPackages"
+      url = "https://maven.pkg.github.com/Migracao-NET/java-library"
+      credentials {
+        username = System.getenv("GITHUB_ACTOR")
+        password = System.getenv("GITHUB_TOKEN")
+      }
+    }
+  }
 }
