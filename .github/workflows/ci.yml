@@ -71,6 +71,7 @@ jobs:
             -Dsonar.sources=src
             -Dsonar.tests=src/test
             -Dsonar.java.binaries=build/classes
+            -Dsonar.branch.name=main
             -Dsonar.verbose=true
 
       - name: Upload build artifacts
