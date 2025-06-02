@@ -31,8 +31,6 @@ tasks.named('test') {
 
 sonar {
   properties {
-    property "sonar.projectKey", "java-library"
-    property "sonar.organization", "migracao-net"
     property "sonar.host.url", "https://sonarcloud.io"
   }
 }
