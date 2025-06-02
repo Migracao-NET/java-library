@@ -2,7 +2,7 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '3.5.0'
 	id 'io.spring.dependency-management' version '1.1.7'
-	id 'maven-publish'
+	// id 'maven-publish'
 	id "org.sonarqube" version "6.2.0.5505"
 }
 
@@ -37,20 +37,20 @@ sonar {
   }
 }
 
-publishing {
-	publications {
-		mavenJava(MavenPublication) {
-			from components.java
-		}
-	}
-  	repositories {
-    	maven {
-      name = "GitHubPackages"
-      url = "https://maven.pkg.github.com/Migracao-NET/java-library"
-      credentials {
-        username = System.getenv("GITHUB_ACTOR")
-        password = System.getenv("GITHUB_TOKEN")
-      }
-    }
-  }
-}
+// publishing {
+// 	publications {
+// 		mavenJava(MavenPublication) {
+// 			from components.java
+// 		}
+// 	}
+//   	repositories {
+//     	maven {
+//       name = "GitHubPackages"
+//       url = "https://maven.pkg.github.com/Migracao-NET/java-library"
+//       credentials {
+//         username = System.getenv("GITHUB_ACTOR")
+//         password = System.getenv("GITHUB_TOKEN")
+//       }
+//     }
+//   }
+// }

@@ -30,16 +30,16 @@ jobs:
           - name: Run Tests
             run: ./gradlew test
 
-          - name: SonarCloud Scan
-            uses: SonarSource/sonarqube-scan-action@v5
-            env:
-              SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-            with:
-              args: >
-                -Dsonar.organization='migracao-net'
-                -Dsonar.projectKey=${{ github.event.repository.name }}
-                -Dsonar.projectName=${{ github.event.repository.name }}
-                -Dsonar.verbose=true
+          # - name: SonarCloud Scan
+          #   uses: SonarSource/sonarqube-scan-action@v5
+          #   env:
+          #     SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          #   with:
+          #     args: >
+          #       -Dsonar.organization='migracao-net'
+          #       -Dsonar.projectKey=${{ github.event.repository.name }}
+          #       -Dsonar.projectName=${{ github.event.repository.name }}
+          #       -Dsonar.verbose=true
 
           - name: Upload build artifacts
             uses: actions/upload-artifact@v4
