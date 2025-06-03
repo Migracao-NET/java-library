@@ -57,7 +57,7 @@ jobs:
       #   shell: bash
 
       - name: Definir chave do projeto Sonar
-        run: echo "SONAR_PROJECT_KEY=$(echo '${{ github.repository }}' | tr '[:upper:]' '[:lower:]' | tr '/' '_')" >> $GITHUB_ENV
+        run: echo "SONAR_PROJECT_KEY=$(echo '${{ github.repository }}' | tr '[:upper:]' '[:lower:]' )" >> $GITHUB_ENV
 
       - name: SonarCloud Scan
         uses: SonarSource/sonarqube-scan-action@v5
